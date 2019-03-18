@@ -4,7 +4,7 @@ import CreateTodo from './createTodo';
 import TodoList from './todoList';
 
 // eslint-disable-next-line react/prefer-stateless-function
-export default class App extends React.Component {
+class App extends React.Component {
   render() {
     return (
       <div>
@@ -14,3 +14,5 @@ export default class App extends React.Component {
     );
   }
 }
+
+export default App;

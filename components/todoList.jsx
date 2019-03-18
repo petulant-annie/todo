@@ -1,15 +1,19 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
 
-import store from '../store';
-
-// eslint-disable-next-line react/prefer-stateless-function
 class TodoList extends React.Component {
   render() {
-    const list = [store.children];
-    return (
-      <p>{list}</p>
-    );
+    const todos = this.props.todos.map((item, index) => {
+      return (
+        <p key={index}>{item.id + 1}: {item.text}, {item.completed ? '' : 'not'} completed.</p>
+      );
+    });
+    return todos;
   }
 }
 
-export default TodoList;
+const mapStateToProps = (state) => {
+  return state;
+};
+
+export default connect(mapStateToProps)(TodoList);

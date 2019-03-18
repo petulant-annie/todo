@@ -2,21 +2,26 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { addTodo } from '../actions/actions';
-import { todos } from './../redusers/addTodoReduser';
 
 
 class CreateTodo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: null,
+      text: '',
     };
 
-    // this.onChangeTodoText = this.addOnClick.bind(this);
+    this.onChangeTodoText = this.onChangeTodoText.bind(this);
+  }
+
+  onChangeTodoText(e) {
+    this.setState({
+      text: e.target.value,
+    });
   }
 
   onChangeText = (e) => {
-    this.props.addTodo(this.state.text, todos.state.length);
+    this.props.addTodo(this.state.text, this.props.id);
     this.setState({
       text: e.target.value,
     });
@@ -30,14 +35,18 @@ class CreateTodo extends React.Component {
     return (
       <div>
         <h3>TODO</h3>
-        <form onChange={this.onChangeText}>
+        <form onChange={this.onChangeTodoText}>
           <input type="text" placeholder="what to do?" />
-          <button>Add Todo</button>
+          <button type="submit" onClick={this.onChangeText}>Add Todo</button>
         </form>
       </div>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return { id: state.todos.length };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
@@ -45,4 +54,4 @@ const mapDispatchToProps = (dispatch) => {
   }, dispatch);
 };
 
-export default connect(null, mapDispatchToProps)(CreateTodo);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateTodo);

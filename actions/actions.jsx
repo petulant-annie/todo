@@ -1,4 +1,3 @@
-
 export const addTodo = (text, id) => ({
   type: 'ADD_TODO',
   id,
