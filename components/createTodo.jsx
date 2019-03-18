@@ -2,6 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { addTodo } from '../actions/actions';
+import { todos } from './../redusers/addTodoReduser';
 
 
 class CreateTodo extends React.Component {
@@ -9,17 +10,15 @@ class CreateTodo extends React.Component {
     super(props);
     this.state = {
       text: null,
-      id: 2,
     };
 
     // this.onChangeTodoText = this.addOnClick.bind(this);
   }
 
   onChangeText = (e) => {
-    this.props.addTodo(this.state.text, this.state.id);
+    this.props.addTodo(this.state.text, todos.state.length);
     this.setState({
       text: e.target.value,
-      id: (this.state.id + 1),
     });
   }
 
