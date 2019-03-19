@@ -27,7 +27,7 @@ export const todos = (state = INITIAL_DATA, action) => {
       return state.map(todo =>
         (todo.id === action.id ? { ...todo, completed: !todo.completed } : todo));
     case 'REMOVE_TODO':
-      return state.splice(action.id, 1);
+      return state.splice(1, action.id);
     default:
       return state;
   }
