@@ -1,7 +1,7 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import logger from 'redux-logger';
 
-import { todos } from './redusers/addTodoReduser';
+import { todos } from './reduсers/addTodoReduсer';
 
 const store = createStore(
   combineReducers({
