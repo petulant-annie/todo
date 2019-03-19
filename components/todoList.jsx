@@ -1,14 +1,19 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 import { deleteTodo } from '../actions/actions';
 
 class TodoList extends React.Component {
+  onDeleteText = () => {
+    this.props.deleteTodo(this.props.id);
+  }
   render() {
     const todos = this.props.todos.map((item, index) => (
       <div key={index}>
         <p>{item.id + 1}: {item.text}, {item.completed ? '' : 'not'} completed.</p>
         <button>Done</button>
-        <button onClick={deleteTodo}>Remove</button>
+        <button onClick={this.onDeleteText}>Remove</button>
       </div>
     ));
     return todos;
@@ -17,4 +22,8 @@ class TodoList extends React.Component {
 
 const mapStateToProps = state => state;
 
-export default connect(mapStateToProps)(TodoList);
+const mapDispatchToProps = dispatch => bindActionCreators({
+  deleteTodo,
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
