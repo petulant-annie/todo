@@ -27,31 +27,23 @@ class CreateTodo extends React.Component {
     });
   }
 
-  // addOnClick = (e) => {
-
-  // }
-
   render() {
     return (
       <div>
         <h3>TODO</h3>
-        <form onChange={this.onChangeTodoText}>
-          <input type="text" placeholder="what to do?" />
-          <button type="submit" onClick={this.onChangeText}>Add Todo</button>
-        </form>
+        <div>
+          <input onChange={this.onChangeTodoText} value={this.state.text} type="text" placeholder="what to do?" />
+          <button onClick={this.onChangeText}>Add Todo</button>
+        </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  return { id: state.todos.length };
-};
+const mapStateToProps = state => ({ id: state.todos.length });
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({
-    addTodo,
-  }, dispatch);
-};
+const mapDispatchToProps = dispatch => bindActionCreators({
+  addTodo,
+}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateTodo);
