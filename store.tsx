@@ -1,14 +1,14 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import logger from 'redux-logger';
 
-import { todos } from './reduсers/addTodoReduсer';
+import { todos } from './reduсers/todoReducers';
+import todoLogger from './middlewares/todoMiddleware';
 
 const store = createStore(
   combineReducers({
     todos,
   }),
   {},
-  applyMiddleware(logger),
+  applyMiddleware(todoLogger),
 );
 
 export default store;

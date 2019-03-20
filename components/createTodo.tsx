@@ -9,18 +9,20 @@ interface ICreateTodo {
   addTodo: any;
 }
 
-class CreateTodo extends React.Component<ICreateTodo> {
-  state: { text: string };
+interface IStateTodo {
+  text: string;
+}
+
+class CreateTodo extends React.Component<ICreateTodo, IStateTodo> {
   constructor(props: Readonly<ICreateTodo>) {
     super(props);
     this.state = {
       text: '',
     };
 
-    this.onChangeTodoText = this.onChangeTodoText.bind(this);
   }
 
-  onChangeTodoText(e: React.ChangeEvent<HTMLInputElement>) {
+  onChangeTodoText = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
       text: e.target.value,
     });
@@ -54,7 +56,9 @@ class CreateTodo extends React.Component<ICreateTodo> {
 const mapStateToProps = (state: any) => ({ id: state.todos.length });
 
 const mapDispatchToProps = (dispatch: any) => bindActionCreators(
-  { addTodo },
+  {
+    addTodo,
+  },
   dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateTodo);

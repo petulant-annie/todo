@@ -10,17 +10,26 @@ interface ICreateList {
   deleteTodo: any;
 }
 
-class TodoList extends React.Component<ICreateList> {
-  render() {
-    const todos = this.props.todos.map((item: any, index: number) => (
+interface IItem {
+  text: string;
+  id: number;
+  completed: boolean;
+}
+
+class TodoList extends React.Component<ICreateList, IItem> {
+  createTodos() {
+    return this.props.todos.map((item: IItem, index: number) => (
       <div key={index} >
         <p>{item.text}, {item.completed ? '' : 'not'} completed.</p>
         <button onClick={this.props.toggleTodo.bind(this, item.id)}>Done</button>
         <button onClick={this.props.deleteTodo.bind(this, item.id)}>Remove</button>
       </div >
     ));
-
-    return todos;
+  }
+  render() {
+    return (
+      <div>{this.createTodos()}</div>
+    );
   }
 }
 const mapStateToProps = (state: {}) => state;
