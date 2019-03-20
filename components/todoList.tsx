@@ -8,6 +8,7 @@ interface IItem {
   text: string;
   id: number;
   completed: boolean;
+  type: string;
 }
 
 interface IActionCreator<IItem> {
