@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, Dispatch } from 'redux';
 
 import { addTodo } from '../actions/actions';
-import { IActionCreator, IItem, ICreateList } from './todoList';
+import { ICreateList } from './todoList';
 
 interface ICreateTodo {
   id: number;
-  addTodo: any;
+  addTodo: (text: string, id: number) => void;
 }
 
 interface IStateTodo {
@@ -15,7 +15,7 @@ interface IStateTodo {
 }
 
 class CreateTodo extends React.Component<ICreateTodo, IStateTodo> {
-  constructor(props: Readonly<ICreateTodo>) {
+  constructor(props: ICreateTodo) {
     super(props);
     this.state = {
       text: '',
@@ -29,7 +29,7 @@ class CreateTodo extends React.Component<ICreateTodo, IStateTodo> {
     });
   }
 
-  onChangeText = (e: React.MouseEvent) => {
+  private onChangeText = (e: React.MouseEvent) => {
     this.props.addTodo(this.state.text, this.props.id);
     this.setState({
       text: (e.target as HTMLTextAreaElement).value,
@@ -56,7 +56,7 @@ class CreateTodo extends React.Component<ICreateTodo, IStateTodo> {
 
 const mapStateToProps = (state: ICreateList) => ({ id: state.todos.length });
 
-const mapDispatchToProps = (dispatch: IActionCreator<IItem>) => bindActionCreators(
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(
   {
     addTodo,
   },

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, Dispatch } from 'redux';
 
 import { deleteTodo, toggleTodo } from '../actions/actions';
 
@@ -11,22 +11,15 @@ export interface IItem {
   type: string;
 }
 
-export interface IActionCreator<IItem> {
-  (...deleteTodo: number[]): IItem;
-  (...toggleTodo: number[]): IItem;
-  (...addTodo: number[] | string[]): IItem;
-}
-
 export interface ICreateList {
   todos?: [];
-  deleteTodo: IActionCreator<IItem>;
-  toggleTodo: IActionCreator<IItem>;
-  addTodo: IActionCreator<IItem>;
+  deleteTodo: (id: number) => void;
+  toggleTodo: (id: number) => void;
 }
 
-class TodoList extends React.Component<ICreateList, IActionCreator<IItem>> {
+class TodoList extends React.Component<ICreateList> {
   createTodos() {
-    return this.props.todos.map((item: IItem, index: number) => (
+    return (this.props.todos as []).map((item: IItem, index: number) => (
       <div key={index} >
         <p>{item.text}, {item.completed ? '' : 'not'} completed.</p>
         <button onClick={this.props.toggleTodo.bind(this, item.id)}>Done</button>
@@ -42,7 +35,7 @@ class TodoList extends React.Component<ICreateList, IActionCreator<IItem>> {
 }
 const mapStateToProps = (state: {}) => state;
 
-const mapDispatchToProps = (dispatch: IActionCreator<IItem>) => bindActionCreators(
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(
   {
     deleteTodo,
     toggleTodo,
