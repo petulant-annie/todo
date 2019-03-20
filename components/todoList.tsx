@@ -4,22 +4,24 @@ import { bindActionCreators } from 'redux';
 
 import { deleteTodo, toggleTodo } from '../actions/actions';
 
-interface IItem {
+export interface IItem {
   text: string;
   id: number;
   completed: boolean;
   type: string;
 }
 
-interface IActionCreator<IItem> {
-  (...deleteTodo: any[]): IItem;
-  (...toggleTodo: any[]): IItem;
+export interface IActionCreator<IItem> {
+  (...deleteTodo: number[]): IItem;
+  (...toggleTodo: number[]): IItem;
+  (...addTodo: number[] | string[]): IItem;
 }
 
-interface ICreateList {
+export interface ICreateList {
   todos?: [];
   deleteTodo: IActionCreator<IItem>;
   toggleTodo: IActionCreator<IItem>;
+  addTodo: IActionCreator<IItem>;
 }
 
 class TodoList extends React.Component<ICreateList, IActionCreator<IItem>> {
