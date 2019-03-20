@@ -4,19 +4,24 @@ import { bindActionCreators } from 'redux';
 
 import { deleteTodo, toggleTodo } from '../actions/actions';
 
-interface ICreateList {
-  todos?: [];
-  toggleTodo: any;
-  deleteTodo: any;
-}
-
 interface IItem {
   text: string;
   id: number;
   completed: boolean;
 }
 
-class TodoList extends React.Component<ICreateList, IItem> {
+interface IActionCreator<IItem> {
+  (...deleteTodo: any[]): IItem;
+  (...toggleTodo: any[]): IItem;
+}
+
+interface ICreateList {
+  todos?: [];
+  deleteTodo: IActionCreator<IItem>;
+  toggleTodo: IActionCreator<IItem>;
+}
+
+class TodoList extends React.Component<ICreateList, IActionCreator<IItem>> {
   createTodos() {
     return this.props.todos.map((item: IItem, index: number) => (
       <div key={index} >
@@ -34,7 +39,7 @@ class TodoList extends React.Component<ICreateList, IItem> {
 }
 const mapStateToProps = (state: {}) => state;
 
-const mapDispatchToProps = (dispatch: any) => bindActionCreators(
+const mapDispatchToProps = (dispatch: IActionCreator<IItem>) => bindActionCreators(
   {
     deleteTodo,
     toggleTodo,
